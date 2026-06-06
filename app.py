@@ -54,12 +54,43 @@ div[role="radiogroup"] label p {
 .question-title {
     font-size:1.12rem !important;
     font-weight:700;
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
-.anchor-text {
-    font-size:1rem !important;
-    color:#333;
-    margin-bottom:5px;
+.choice-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+}
+.choice-box {
+    flex: 1;
+    background-color: #ffffff;
+    border: 1px solid #d9d9e3;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.98rem !important;
+    line-height: 1.35 !important;
+}
+.choice-left {
+    border-left: 5px solid #9aa7c7;
+}
+.choice-right {
+    border-left: 5px solid #9fc7a5;
+}
+.choice-label {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.95rem !important;
+}
+.choice-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    font-size: 1.4rem !important;
+    color: #777;
 }
 .scale-help {
     font-size:0.95rem !important;
@@ -261,7 +292,6 @@ def generate_personal_action_plan(subscale_scores: dict, total_mean: float) -> l
     }
 
     plan = []
-
     plan.append(
         f"En güçlü alan olan '{strongest}' alanını korumak için: "
         f"Bu alanın size hangi durumlarda yardımcı olduğunu fark edin ve zorlandığınızda bilinçli olarak kullanın."
@@ -381,8 +411,20 @@ for item in ITEMS:
         f"""
         <div class="question-box">
             <div class="question-title">{item['no']}. {item['text']}</div>
-            <div class="anchor-text"><strong>1 - Sol uç:</strong> {item['left']}</div>
-            <div class="anchor-text"><strong>5 - Sağ uç:</strong> {item['right']}</div>
+
+            <div class="choice-row">
+                <div class="choice-box choice-left">
+                    <span class="choice-label">1 · Sol uç</span>
+                    {item['left']}
+                </div>
+
+                <div class="choice-arrow">↔</div>
+
+                <div class="choice-box choice-right">
+                    <span class="choice-label">5 · Sağ uç</span>
+                    {item['right']}
+                </div>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -503,9 +545,7 @@ if submitted:
 
     action_plan = generate_personal_action_plan(subscale_scores, total_mean)
 
-    plan_html = """
-    <div class='report-box'>
-    """
+    plan_html = "<div class='report-box'>"
 
     for idx, action in enumerate(action_plan, start=1):
         plan_html += f"<p><strong>{idx}.</strong> {action}</p>"
