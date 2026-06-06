@@ -36,10 +36,36 @@ p, li, div, span, label {
     font-size: 1rem !important;
     padding: 0.55rem 0.9rem !important;
 }
+.stRadio {
+    margin-top: -6px !important;
+    margin-bottom: 10px !important;
+}
+.stRadio div[role="radiogroup"] {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+}
+.stRadio div[role="radiogroup"] label {
+    background-color: #ffffff;
+    border: 1px solid #d9d9e3;
+    border-radius: 999px;
+    padding: 8px 14px;
+}
+.stRadio div[role="radiogroup"] label p {
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+}
 .scale-help {
     font-size:0.95rem !important;
     color:#555;
     margin-top:8px;
+}
+.slider-note {
+    font-size:0.9rem !important;
+    color:#666;
+    margin-top:2px;
+    margin-bottom:8px;
+    text-align:center;
 }
 .report-box {
     background-color:#fbfbfd;
@@ -50,12 +76,6 @@ p, li, div, span, label {
 }
 .report-box p, .report-box div, .report-box strong {
     font-size:1rem !important;
-}
-.slider-note {
-    font-size:0.9rem !important;
-    color:#666;
-    margin-top:-8px;
-    margin-bottom:18px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -336,17 +356,18 @@ for item in ITEMS:
     with col_right:
         st.success(f"**5 · Sağ uç**\n\n{item['right']}")
 
-    responses[item["no"]] = st.select_slider(
-        label="Seçiminiz",
-        options=[1, 2, 3, 4, 5],
-        value=3,
-        key=f"item_{item['no']}",
-        label_visibility="collapsed"
-    )
-
     st.markdown(
         "<div class='slider-note'>1 = Sol uca en yakın yanıt &nbsp;&nbsp; | &nbsp;&nbsp; 3 = Orta &nbsp;&nbsp; | &nbsp;&nbsp; 5 = Sağ uca en yakın yanıt</div>",
         unsafe_allow_html=True
+    )
+
+    responses[item["no"]] = st.radio(
+        label="Seçiminiz",
+        options=[1, 2, 3, 4, 5],
+        index=2,
+        horizontal=True,
+        key=f"item_{item['no']}",
+        label_visibility="collapsed"
     )
 
     st.write("---")
