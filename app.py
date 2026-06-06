@@ -43,55 +43,6 @@ div[role="radiogroup"] label p {
     font-size: 1rem !important;
     padding: 0.55rem 0.9rem !important;
 }
-.question-box {
-    background-color:#f7f7f9;
-    border:1px solid #e2e2e8;
-    border-radius:14px;
-    padding:16px 18px;
-    margin-top:10px;
-    margin-bottom:10px;
-}
-.question-title {
-    font-size:1.12rem !important;
-    font-weight:700;
-    margin-bottom:10px;
-}
-.choice-row {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 10px;
-}
-.choice-box {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #d9d9e3;
-    border-radius: 12px;
-    padding: 12px 14px;
-    font-size: 0.98rem !important;
-    line-height: 1.35 !important;
-}
-.choice-left {
-    border-left: 5px solid #9aa7c7;
-}
-.choice-right {
-    border-left: 5px solid #9fc7a5;
-}
-.choice-label {
-    font-weight: 700;
-    display: block;
-    margin-bottom: 4px;
-    font-size: 0.95rem !important;
-}
-.choice-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 38px;
-    font-size: 1.4rem !important;
-    color: #777;
-}
 .scale-help {
     font-size:0.95rem !important;
     color:#555;
@@ -292,6 +243,7 @@ def generate_personal_action_plan(subscale_scores: dict, total_mean: float) -> l
     }
 
     plan = []
+
     plan.append(
         f"En güçlü alan olan '{strongest}' alanını korumak için: "
         f"Bu alanın size hangi durumlarda yardımcı olduğunu fark edin ve zorlandığınızda bilinçli olarak kullanın."
@@ -407,28 +359,21 @@ st.markdown(
 responses = {}
 
 for item in ITEMS:
-    st.markdown(
-        f"""
-        <div class="question-box">
-            <div class="question-title">{item['no']}. {item['text']}</div>
+    st.markdown(f"### {item['no']}. {item['text']}")
 
-            <div class="choice-row">
-                <div class="choice-box choice-left">
-                    <span class="choice-label">1 · Sol uç</span>
-                    {item['left']}
-                </div>
+    col_left, col_mid, col_right = st.columns([4, 1, 4])
 
-                <div class="choice-arrow">↔</div>
+    with col_left:
+        st.info(f"**1 · Sol uç**\n\n{item['left']}")
 
-                <div class="choice-box choice-right">
-                    <span class="choice-label">5 · Sağ uç</span>
-                    {item['right']}
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    with col_mid:
+        st.markdown(
+            "<div style='text-align:center; font-size:24px; padding-top:24px;'>↔</div>",
+            unsafe_allow_html=True
+        )
+
+    with col_right:
+        st.success(f"**5 · Sağ uç**\n\n{item['right']}")
 
     responses[item["no"]] = st.radio(
         label="Seçiminiz",
@@ -439,7 +384,7 @@ for item in ITEMS:
         label_visibility="collapsed"
     )
 
-    st.write("")
+    st.write("---")
 
 submitted = st.button("Raporu Oluştur", type="primary")
 
