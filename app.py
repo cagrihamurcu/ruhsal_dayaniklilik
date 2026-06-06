@@ -5,7 +5,7 @@ import io
 import matplotlib.pyplot as plt
 
 st.set_page_config(
-    page_title="Yetişkinler İçin Ruhsal Dayanıklılık Ölçeği",
+    page_title="Yetişkinler İçin Psikolojik Dayanıklılık Ölçeği",
     page_icon="🧭",
     layout="centered"
 )
@@ -559,26 +559,6 @@ if submitted:
     st.write(f"**Betimleyici düzey:** {level_band(total_mean)}")
     st.write(general_level_comment(total_mean))
 
-    st.markdown("## 📝 Katılımcıya Özel Mini Eylem Planı")
-
-    st.info(
-        "Bu bölüm, katılımcının puan örüntüsüne göre otomatik oluşturulur. "
-        "En güçlü alan korunurken, en fazla desteklenebilecek alan için küçük ve uygulanabilir adımlar önerilir."
-    )
-
-    action_plan = generate_personal_action_plan(subscale_scores, total_mean)
-
-    plan_html = """
-    <div class='report-box'>
-    """
-
-    for idx, action in enumerate(action_plan, start=1):
-        plan_html += f"<p><strong>{idx}.</strong> {action}</p>"
-
-    plan_html += "</div>"
-
-    st.markdown(plan_html, unsafe_allow_html=True)
-
     st.subheader("Alt Boyut Puanları")
 
     result_df = pd.DataFrame({
@@ -641,6 +621,26 @@ if submitted:
             expanded=(sub == strongest or sub == weakest)
         ):
             st.write(detailed_subscale_interpretation(sub, score, strongest, weakest))
+
+    st.markdown("## 📝 Katılımcıya Özel Mini Eylem Planı")
+
+    st.info(
+        "Bu bölüm, katılımcının puan örüntüsüne göre otomatik oluşturulur. "
+        "En güçlü alan korunurken, en fazla desteklenebilecek alan için küçük ve uygulanabilir adımlar önerilir."
+    )
+
+    action_plan = generate_personal_action_plan(subscale_scores, total_mean)
+
+    plan_html = """
+    <div class='report-box'>
+    """
+
+    for idx, action in enumerate(action_plan, start=1):
+        plan_html += f"<p><strong>{idx}.</strong> {action}</p>"
+
+    plan_html += "</div>"
+
+    st.markdown(plan_html, unsafe_allow_html=True)
 
     report_text = build_report(
         participant_name=participant_name,
