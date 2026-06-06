@@ -32,13 +32,6 @@ p, li, div, span, label {
 .stCaptionContainer, .stCaptionContainer p {
     font-size: 0.95rem !important;
 }
-.stRadio label, .stRadio div, .stRadio span, .stRadio p {
-    font-size: 1.05rem !important;
-}
-div[role="radiogroup"] label p {
-    font-size: 1.08rem !important;
-    font-weight: 600 !important;
-}
 .stButton button, .stDownloadButton button {
     font-size: 1rem !important;
     padding: 0.55rem 0.9rem !important;
@@ -57,6 +50,12 @@ div[role="radiogroup"] label p {
 }
 .report-box p, .report-box div, .report-box strong {
     font-size:1rem !important;
+}
+.slider-note {
+    font-size:0.9rem !important;
+    color:#666;
+    margin-top:-8px;
+    margin-bottom:18px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -126,30 +125,14 @@ def level_band(score: float) -> str:
 
 def general_level_comment(score: float) -> str:
     if score < 2.0:
-        return (
-            "Genel profil düşük düzeyde görünmektedir. Bu durum, katılımcının zorlayıcı yaşam olayları karşısında "
-            "kendi kaynaklarını fark etmekte, sosyal destek aramakta veya gelecek ve planlama alanlarında güçlük yaşayabileceğini düşündürür. "
-            "Bu sonuç kişisel yetersizlik anlamına gelmez; desteklenebilir alanları görünür kılar."
-        )
+        return "Genel profil düşük düzeyde görünmektedir. Bu sonuç kişisel yetersizlik anlamına gelmez; desteklenebilir alanları görünür kılar."
     if score < 2.75:
-        return (
-            "Genel profil düşük-orta düzeyde görünmektedir. Katılımcının bazı dayanıklılık kaynakları mevcut olmakla birlikte, "
-            "bu kaynakların stres dönemlerinde düzenli ve etkili biçimde kullanılması zorlaşabilir. Küçük, somut ve sürdürülebilir destek adımları yararlı olabilir."
-        )
+        return "Genel profil düşük-orta düzeyde görünmektedir. Küçük, somut ve sürdürülebilir destek adımları yararlı olabilir."
     if score < 3.50:
-        return (
-            "Genel profil orta düzeydedir. Bu örüntü, katılımcının bazı psikolojik ve sosyal kaynaklara sahip olduğunu; "
-            "ancak bu kaynakların bazı durumlarda dalgalanabileceğini veya daha bilinçli kullanılmaya ihtiyaç duyabileceğini gösterir."
-        )
+        return "Genel profil orta düzeydedir. Bazı kaynaklar mevcut olmakla birlikte daha bilinçli kullanılmaya ihtiyaç duyabilir."
     if score < 4.25:
-        return (
-            "Genel profil iyi düzeydedir. Katılımcının zorlayıcı durumlarla baş etmesini kolaylaştırabilecek belirgin kaynakları vardır. "
-            "Bu aşamada amaç, güçlü alanları korumak ve daha düşük kalan alanları hedefli biçimde güçlendirmektir."
-        )
-    return (
-        "Genel profil çok iyi düzeydedir. Katılımcı, bireysel ve/veya sosyal kaynaklarını zorlayıcı durumlarda kullanabilecek güçlü bir dayanıklılık örüntüsü göstermektedir. "
-        "Yüksek puan hiç zorlanmayacağı anlamına gelmez; toparlanmayı kolaylaştırabilecek kaynakların güçlü algılandığını gösterir."
-    )
+        return "Genel profil iyi düzeydedir. Güçlü alanları korumak ve daha düşük kalan alanları desteklemek yararlı olur."
+    return "Genel profil çok iyi düzeydedir. Toparlanmayı kolaylaştırabilecek kaynakların güçlü algılandığını gösterir."
 
 
 def generate_profile_commentary(subscale_scores: dict) -> dict:
@@ -164,36 +147,18 @@ def generate_profile_commentary(subscale_scores: dict) -> dict:
     spread = max(subscale_scores.values()) - min(subscale_scores.values())
 
     if spread >= 1.50:
-        distribution = (
-            "Alt boyutlar arasında belirgin farklılaşma vardır. Bu, dayanıklılık kaynaklarının homojen dağılmadığını gösterir. "
-            "Bazı alanlar güçlü bir dayanak oluştururken bazı alanlar zorlayıcı dönemlerde kırılganlık yaratabilir."
-        )
+        distribution = "Alt boyutlar arasında belirgin farklılaşma vardır. Bazı alanlar güçlü bir dayanak oluştururken bazı alanlar daha fazla desteklenebilir."
     elif spread >= 0.80:
-        distribution = (
-            "Alt boyutlar arasında orta düzeyde farklılaşma vardır. Katılımcının dayanıklılık kaynakları genel olarak mevcut görünmekle birlikte, "
-            f"{strongest} alanı daha güçlü bir kaynak, {weakest} alanı ise daha fazla desteklenebilecek alan olarak görünmektedir."
-        )
+        distribution = f"Alt boyutlar arasında orta düzeyde farklılaşma vardır. {strongest} daha güçlü bir kaynak, {weakest} ise desteklenebilir alan olarak görünmektedir."
     else:
-        distribution = (
-            "Alt boyutlar birbirine görece yakın görünmektedir. Bu, dayanıklılık kaynaklarının daha dengeli dağıldığını düşündürür. "
-            "Bu durumda amaç tek bir alanı düzeltmekten çok, tüm kaynakları düzenli biçimde korumak ve güçlendirmektir."
-        )
+        distribution = "Alt boyutlar birbirine görece yakın görünmektedir. Dayanıklılık kaynakları daha dengeli dağılmış olabilir."
 
     if personal_mean >= relational_mean + 0.50:
-        balance = (
-            f"Kişisel/içsel kaynaklar ortalaması ({personal_mean:.2f}), sosyal/ilişkisel kaynaklar ortalamasından ({relational_mean:.2f}) daha yüksektir. "
-            "Bu örüntü, katılımcının daha çok kendi problem çözme kapasitesi, planlama becerisi veya gelecek yönelimine yaslandığını düşündürür."
-        )
+        balance = f"Kişisel/içsel kaynaklar ({personal_mean:.2f}), sosyal/ilişkisel kaynaklardan ({relational_mean:.2f}) daha yüksektir."
     elif relational_mean >= personal_mean + 0.50:
-        balance = (
-            f"Sosyal/ilişkisel kaynaklar ortalaması ({relational_mean:.2f}), kişisel/içsel kaynaklar ortalamasından ({personal_mean:.2f}) daha yüksektir. "
-            "Bu örüntü, katılımcının çevresel desteklerden güç aldığını; bireysel alanların ayrıca desteklenebileceğini düşündürür."
-        )
+        balance = f"Sosyal/ilişkisel kaynaklar ({relational_mean:.2f}), kişisel/içsel kaynaklardan ({personal_mean:.2f}) daha yüksektir."
     else:
-        balance = (
-            f"Kişisel/içsel kaynaklar ({personal_mean:.2f}) ile sosyal/ilişkisel kaynaklar ({relational_mean:.2f}) birbirine yakın düzeydedir. "
-            "Bu, dayanıklılığın hem bireysel hem de sosyal kaynaklarla desteklendiğini gösteren dengeli bir örüntü olabilir."
-        )
+        balance = f"Kişisel/içsel kaynaklar ({personal_mean:.2f}) ile sosyal/ilişkisel kaynaklar ({relational_mean:.2f}) birbirine yakın düzeydedir."
 
     return {
         "strongest": strongest,
@@ -212,27 +177,27 @@ def generate_personal_action_plan(subscale_scores: dict, total_mean: float) -> l
     action_map = {
         "Kendilik algısı": [
             "Bu hafta daha önce başardığınız üç zor durumu yazın.",
-            "Güncel bir problemi seçip bu problemi üç küçük çözüm adımına ayırın.",
-            "Her günün sonunda 'Bugün baş edebildiğim bir şey neydi?' sorusuna kısa bir yanıt yazın."
+            "Güncel bir problemi üç küçük çözüm adımına ayırın.",
+            "Her günün sonunda 'Bugün baş edebildiğim bir şey neydi?' sorusuna kısa yanıt yazın."
         ],
         "Gelecek algısı": [
             "Bir haftalık küçük, gerçekçi ve ölçülebilir bir hedef belirleyin.",
             "Bu hedef için ilk 10 dakikalık adımı yazın.",
-            "Hafta sonunda hedefin neden tamamlandığını ya da neden aksadığını yargılamadan değerlendirin."
+            "Hafta sonunda hedefin neden tamamlandığını ya da aksadığını yargılamadan değerlendirin."
         ],
         "Yapısal stil": [
             "Yarın için yalnızca üç öncelik yazın.",
             "Bir işi 15 dakikalık küçük bir parçaya bölerek başlatın.",
-            "Uyku, yemek, çalışma veya hareket için bir sabit rutin seçip bir hafta uygulayın."
+            "Bir sabit rutin seçip bir hafta uygulayın."
         ],
         "Sosyal yeterlilik": [
             "Güvende hissettiğiniz biriyle kısa bir iletişim başlatın.",
             "Bir sosyal ortamda en az bir açık uçlu soru sorun.",
-            "Yardım istemeniz gerekse kullanacağınız bir cümleyi önceden yazın."
+            "Yardım istemek için kullanacağınız bir cümleyi önceden yazın."
         ],
         "Aile uyumu": [
             "Aileden beklediğiniz bir desteği somut olarak yazın.",
-            "Bu beklentiyi suçlayıcı olmayan bir 'ben dili' cümlesine dönüştürün.",
+            "Bu beklentiyi 'ben dili' cümlesine dönüştürün.",
             "Aile içinde kısa ama olumlu bir ortak zaman planlayın."
         ],
         "Sosyal kaynaklar": [
@@ -242,34 +207,31 @@ def generate_personal_action_plan(subscale_scores: dict, total_mean: float) -> l
         ],
     }
 
-    plan = []
-
-    plan.append(
-        f"En güçlü alan olan '{strongest}' alanını korumak için: "
-        f"Bu alanın size hangi durumlarda yardımcı olduğunu fark edin ve zorlandığınızda bilinçli olarak kullanın."
-    )
+    plan = [
+        f"En güçlü alan olan '{strongest}' alanını korumak için: Bu alanın size hangi durumlarda yardımcı olduğunu fark edin."
+    ]
 
     for item in action_map[weakest]:
         plan.append(f"Öncelikli gelişim alanı olan '{weakest}' için: {item}")
 
     if total_mean < 2.75:
-        plan.append(
-            "Genel puan düşük-orta veya düşük aralıkta olduğu için hedefleri küçük tutun; "
-            "aynı anda birçok değişiklik yapmaya çalışmayın."
-        )
+        plan.append("Genel puan düşük-orta/düşük aralıkta olduğu için hedefleri küçük tutun.")
 
-    plan.append(
-        "Bir hafta sonra bu adımları gözden geçirin; işe yarayanları sürdürün, zor gelenleri daha küçük parçalara bölün."
-    )
+    plan.append("Bir hafta sonra bu adımları gözden geçirin; işe yarayanları sürdürün, zor gelenleri daha küçük parçalara bölün.")
 
     return plan
 
 
 def detailed_subscale_interpretation(subscale: str, score: float, strongest: str, weakest: str) -> str:
+    note = ""
+    if subscale == strongest:
+        note = " Bu alan profil içinde en güçlü kaynak olarak görünmektedir."
+    elif subscale == weakest:
+        note = " Bu alan profil içinde en fazla desteklenebilecek alan olarak görünmektedir."
+
     return (
         f"Bu alt boyut için puan {score:.2f}/5 olup betimleyici düzey {level_band(score)} olarak değerlendirilmiştir. "
-        f"Bu alan, katılımcının psikolojik dayanıklılık profilindeki önemli kaynaklardan biridir. "
-        f"Eğer bu alan güçlü görünüyorsa korunması, daha düşük görünüyorsa küçük ve uygulanabilir adımlarla desteklenmesi önerilir."
+        f"Bu alan, katılımcının psikolojik dayanıklılık profilindeki önemli kaynaklardan biridir.{note}"
     )
 
 
@@ -304,7 +266,6 @@ def build_report(participant_name, participant_code, age, gender, subscale_score
     lines.append(f"En fazla desteklenebilecek alan: {weakest} ({subscale_scores[weakest]:.2f}/5)")
     lines.append("")
     lines.append("5. KATILIMCIYA ÖZEL MİNİ EYLEM PLANI")
-    lines.append("Bu bölüm, katılımcının puan örüntüsüne göre otomatik oluşturulmuştur.")
     for i, action in enumerate(generate_personal_action_plan(subscale_scores, total_mean), start=1):
         lines.append(f"{i}) {action}")
     lines.append("")
@@ -315,7 +276,7 @@ def build_report(participant_name, participant_code, age, gender, subscale_score
         lines.append(detailed_subscale_interpretation(sub, score, strongest, weakest))
     lines.append("")
     lines.append("7. Önemli Not")
-    lines.append("Bu rapor tanı koymaz ve klinik değerlendirme yerine geçmez. Sonuçlar yalnızca ölçek yanıtlarına dayalı betimleyici ve psiko-eğitimsel geri bildirimdir.")
+    lines.append("Bu rapor tanı koymaz ve klinik değerlendirme yerine geçmez.")
     return "\n".join(lines)
 
 
@@ -349,7 +310,7 @@ st.subheader("Ölçek Maddeleri")
 st.markdown(
     """
     <div class="scale-help">
-    Her madde için kendinize en yakın kutucuğu seçiniz. <strong>1 sol uca</strong>, <strong>5 sağ uca</strong> en yakın yanıtı ifade eder.
+    Her madde için kendinize en yakın noktayı seçiniz. <strong>1 sol uca</strong>, <strong>5 sağ uca</strong> en yakın yanıtı ifade eder.
     Orta değer olan <strong>3</strong>, iki ifade arasında daha dengeli/kararsız bir konumu gösterir.
     </div>
     """,
@@ -375,13 +336,17 @@ for item in ITEMS:
     with col_right:
         st.success(f"**5 · Sağ uç**\n\n{item['right']}")
 
-    responses[item["no"]] = st.radio(
+    responses[item["no"]] = st.select_slider(
         label="Seçiminiz",
         options=[1, 2, 3, 4, 5],
-        index=2,
-        horizontal=True,
+        value=3,
         key=f"item_{item['no']}",
         label_visibility="collapsed"
+    )
+
+    st.markdown(
+        "<div class='slider-note'>1 = Sol uca en yakın yanıt &nbsp;&nbsp; | &nbsp;&nbsp; 3 = Orta &nbsp;&nbsp; | &nbsp;&nbsp; 5 = Sağ uca en yakın yanıt</div>",
+        unsafe_allow_html=True
     )
 
     st.write("---")
@@ -469,10 +434,6 @@ if submitted:
     )
 
     st.markdown("## 🔎 Alt Boyutlara Göre Ayrıntılı Yorumlar")
-
-    st.write(
-        "Her alt boyut; anlamı, puan yorumu ve güçlendirme önerileriyle birlikte verilmiştir."
-    )
 
     for sub, score in subscale_scores.items():
         with st.expander(
