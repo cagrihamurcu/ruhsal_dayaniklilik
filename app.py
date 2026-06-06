@@ -13,68 +13,68 @@ st.set_page_config(
 st.markdown("""
 <style>
 html, body, [class*="css"] {
-    font-size: 20px !important;
+    font-size: 17px !important;
 }
 .main .block-container {
-    max-width: 1050px;
-    padding-top: 2rem;
+    max-width: 1000px;
+    padding-top: 1.5rem;
 }
 h1 {
-    font-size: 2.5rem !important;
+    font-size: 2.15rem !important;
 }
 h2, h3 {
-    font-size: 1.8rem !important;
+    font-size: 1.45rem !important;
 }
 p, li, div, span, label {
-    font-size: 1.14rem !important;
-    line-height: 1.55 !important;
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
 }
 .stCaptionContainer, .stCaptionContainer p {
-    font-size: 1.18rem !important;
+    font-size: 0.95rem !important;
 }
 .stRadio label, .stRadio div, .stRadio span, .stRadio p {
-    font-size: 1.24rem !important;
+    font-size: 1.05rem !important;
 }
 div[role="radiogroup"] label p {
-    font-size: 1.28rem !important;
-    font-weight: 650 !important;
+    font-size: 1.08rem !important;
+    font-weight: 600 !important;
 }
 .stButton button, .stDownloadButton button {
-    font-size: 1.12rem !important;
-    padding: 0.7rem 1.05rem !important;
+    font-size: 1rem !important;
+    padding: 0.55rem 0.9rem !important;
 }
 .question-box {
     background-color:#f7f7f9;
     border:1px solid #e2e2e8;
-    border-radius:16px;
-    padding:22px 24px;
-    margin-top:12px;
-    margin-bottom:14px;
+    border-radius:14px;
+    padding:16px 18px;
+    margin-top:10px;
+    margin-bottom:10px;
 }
 .question-title {
-    font-size:1.42rem !important;
-    font-weight:750;
-    margin-bottom:12px;
-}
-.anchor-text {
-    font-size:1.26rem !important;
-    color:#333;
+    font-size:1.12rem !important;
+    font-weight:700;
     margin-bottom:8px;
 }
+.anchor-text {
+    font-size:1rem !important;
+    color:#333;
+    margin-bottom:5px;
+}
 .scale-help {
-    font-size:1.13rem !important;
+    font-size:0.95rem !important;
     color:#555;
-    margin-top:10px;
+    margin-top:8px;
 }
 .report-box {
     background-color:#fbfbfd;
-    border-left:6px solid #b8b8c8;
-    padding:22px 24px;
-    border-radius:12px;
-    margin:14px 0 22px 0;
+    border-left:5px solid #b8b8c8;
+    padding:16px 18px;
+    border-radius:10px;
+    margin:12px 0 18px 0;
 }
 .report-box p, .report-box div, .report-box strong {
-    font-size:1.15rem !important;
+    font-size:1rem !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -284,135 +284,10 @@ def generate_personal_action_plan(subscale_scores: dict, total_mean: float) -> l
 
 
 def detailed_subscale_interpretation(subscale: str, score: float, strongest: str, weakest: str) -> str:
-    info = {
-        "Kendilik algısı": {
-            "meaning": "Bu alt boyut, kişinin kendisini ne kadar yeterli, etkili ve baş edebilir gördüğünü değerlendirir. Problem çözme kapasitesine güvenme, beklenmedik olaylarda çözüm arayabilme, kararlarına güvenebilme ve kontrol edemediği durumlarda bile tamamen çaresiz hissetmeden işlevsel kalabilme ile ilişkilidir.",
-            "low": "Kişi zorlayıcı olaylar karşısında kendi gücünü olduğundan daha sınırlı algılayabilir; karar vermeyi, girişimde bulunmayı ve yardım aramayı geciktirebilir.",
-            "mid": "Kişi bazı durumlarda kendi becerilerine güvenebilir; ancak stres arttığında bu güven dalgalanabilir.",
-            "high": "Kişi zorlayıcı olaylar karşısında kendi problem çözme kapasitesine daha kolay erişebilir ve kontrol edebildiği küçük alanlara odaklanabilir.",
-            "daily": "Karar alma, kriz anında sakin kalabilme, problem karşısında seçenek üretebilme, hata yaptığında tamamen vazgeçmeme ve yeniden deneme kapasitesiyle kendini gösterir.",
-            "questions": [
-                "Zorlandığım bir durumda daha önce hangi becerimi kullanarak toparlandım?",
-                "Bu sorunun kontrol edebileceğim küçük bir parçası var mı?",
-                "Bugün bu konuda atabileceğim en küçük gerçekçi adım nedir?"
-            ],
-            "suggestions": [
-                "Geçmişte üstesinden gelinen üç güçlüğü yazın.",
-                "Büyük problemleri küçük, uygulanabilir adımlara bölün.",
-                "Karar verirken yalnızca riskleri değil, elinizdeki kaynakları da yazın."
-            ]
-        },
-        "Gelecek algısı": {
-            "meaning": "Bu alt boyut, geleceğe ilişkin umut, yön, amaç ve planlanabilirlik algısını değerlendirir. Hedeflerin ulaşılabilir görülmesi ve yaşamda yön duygusu hissedebilme ile ilişkilidir.",
-            "low": "Gelecek belirsiz, dağınık veya tehdit edici algılanabilir; hedefler uygulanabilir adımlara dönüşmekte zorlanabilir.",
-            "mid": "Geleceğe ilişkin bazı hedefler vardır; ancak bunlar her zaman net, sürdürülebilir veya somut olmayabilir.",
-            "high": "Kişi geleceği kısmen planlanabilir ve şekillendirilebilir bir süreç olarak görebilir; bu da motivasyonu destekleyebilir.",
-            "daily": "Hedef belirleme, uzun vadeli düşünme, umudu koruma, plan yapma ve yaşanan güçlüğü geçici bir dönem olarak görebilme ile kendini gösterir.",
-            "questions": [
-                "Önümüzdeki bir hafta içinde benim için anlamlı olacak küçük bir hedef nedir?",
-                "Bu hedefe ulaşmak için ilk somut adımım ne olabilir?",
-                "Geleceğe ilişkin kaygımın içinde çözüm üretebileceğim bir bölüm var mı?"
-            ],
-            "suggestions": [
-                "Hedefleri kısa, orta ve uzun vadeli olarak ayırın.",
-                "Her hedef için tek bir ilk adım belirleyin.",
-                "Haftalık küçük ilerlemeleri görünür hale getirin."
-            ]
-        },
-        "Yapısal stil": {
-            "meaning": "Bu alt boyut, zamanı kullanma, planlama, rutin oluşturma ve günlük yaşamı organize etme becerisini değerlendirir.",
-            "low": "Kişi ne yapması gerektiğini bilse bile bunu plana dönüştürmekte zorlanabilir; erteleme, dağınıklık ve öncelik belirleme güçlüğü yaşayabilir.",
-            "mid": "Planlama kısmen vardır; ancak yoğunluk, stres veya belirsizlik arttığında rutinler kolay aksayabilir.",
-            "high": "Kişi plan, rutin ve önceliklendirmeden etkin biçimde yararlanabilir; bu da kontrol duygusunu destekler.",
-            "daily": "Ajanda kullanma, işleri sıraya koyma, zamanı bölme, görevleri tamamlama ve zor dönemlerde temel rutini sürdürebilme ile kendini gösterir.",
-            "questions": [
-                "Bugün tamamlamam gereken en önemli üç iş nedir?",
-                "Bu işlerden hangisi en küçük adımla başlayabilir?",
-                "Rutinim bozulduğunda geri dönmemi kolaylaştıracak sabit bir alışkanlık ne olabilir?"
-            ],
-            "suggestions": [
-                "Günlük üç öncelik belirleyin.",
-                "Görevleri 15-20 dakikalık küçük parçalara bölün.",
-                "Uyku, yemek, hareket ve çalışma için temel bir günlük iskelet oluşturun."
-            ]
-        },
-        "Sosyal yeterlilik": {
-            "meaning": "Bu alt boyut, sosyal ortamlarda rahatlık, iletişim başlatma ve sürdürme, yeni ilişkiler kurabilme ve sosyal etkileşimlerden güç alabilme kapasitesini değerlendirir.",
-            "low": "Kişi sosyal ortamlarda çekingenlik, geri çekilme veya iletişim başlatmada zorlanma yaşayabilir; bu durum destek alma kanallarını daraltabilir.",
-            "mid": "Kişi bazı sosyal ortamlarda rahat olabilirken, bazı ortamlarda kendini gergin veya yetersiz hissedebilir.",
-            "high": "Kişi sosyal etkileşimleri psikolojik dayanıklılığı destekleyen bir kaynak olarak kullanabilir.",
-            "daily": "Konuşma başlatma, ihtiyaçlarını ifade etme, destek isteme, sosyal ortama katılma ve ilişkileri sürdürebilme ile kendini gösterir.",
-            "questions": [
-                "Kendimi daha güvende hissettiğim sosyal ortamlar hangileri?",
-                "Bugün başlatabileceğim küçük bir sosyal temas ne olabilir?",
-                "Yardım istemem gerekse bunu kime ve nasıl söyleyebilirim?"
-            ],
-            "suggestions": [
-                "Küçük ve güvenli sosyal temaslarla başlayın.",
-                "Sohbet başlatmak için birkaç basit konu belirleyin.",
-                "Aktif dinleme ve açık uçlu soru sorma becerilerini kullanın."
-            ]
-        },
-        "Aile uyumu": {
-            "meaning": "Bu alt boyut, aile içinde duygusal yakınlık, ortak anlayış, bağlılık, desteklenme ve kriz dönemlerinde birlikte hareket edebilme algısını değerlendirir.",
-            "low": "Kişi aile içinde yeterince anlaşılmadığını, desteklenmediğini veya zor zamanlarda yalnız kaldığını hissedebilir.",
-            "mid": "Aile desteği kısmen mevcuttur; ancak her durumda tutarlı veya erişilebilir hissedilmeyebilir.",
-            "high": "Aile, zorlayıcı dönemlerde güven veren, destekleyici ve toparlanmayı kolaylaştıran bir kaynak olarak işlev görebilir.",
-            "daily": "Aileyle açık konuşabilme, zor zamanda yanında birilerinin olduğunu hissetme ve duygusal destek görebilme ile kendini gösterir.",
-            "questions": [
-                "Ailemden en çok hangi konuda destek bekliyorum?",
-                "Bu desteği suçlayıcı olmayan bir dille nasıl ifade edebilirim?",
-                "Aile içinde iyi gelen temas veya ortak zaman biçimleri neler?"
-            ],
-            "suggestions": [
-                "Destek beklentilerinizi somut cümlelerle ifade edin.",
-                "Aile içinde 'ben dili' kullanın.",
-                "Kısa ama düzenli ortak zamanlar planlayın."
-            ]
-        },
-        "Sosyal kaynaklar": {
-            "meaning": "Bu alt boyut, arkadaşlar, aile üyeleri veya yakın çevreden algılanan destek kaynaklarını değerlendirir. Yardım isteyebilme ve yalnız olmadığını hissetme ile ilişkilidir.",
-            "low": "Kişi sorunları tek başına taşımaya eğilimli olabilir; yardım istemek zor veya yük olmak gibi algılanabilir.",
-            "mid": "Destek kaynakları vardır; ancak kişi bu kaynaklara her zaman kolay ulaşamayabilir.",
-            "high": "Kişi zorlayıcı dönemlerde duygusal, pratik veya bilgilendirici destek alabileceği kişilere daha kolay ulaşabilir.",
-            "daily": "Güvenilir kişilere ulaşabilme, yardım isteme, destekleyici ilişkileri sürdürme ve kriz anında yalnız hissetmeme ile kendini gösterir.",
-            "questions": [
-                "Zorlandığımda arayabileceğim üç kişi kim?",
-                "Bu kişilerden hangi konuda destek isteyebilirim?",
-                "Destek istemeyi kolaylaştıracak ilk cümlem ne olabilir?"
-            ],
-            "suggestions": [
-                "Destek haritası oluşturun.",
-                "Yardım isteme cümlelerini önceden hazırlayın.",
-                "Sosyal ilişkileri kriz dışı zamanlarda da sürdürün."
-            ]
-        },
-    }
-
-    d = info[subscale]
-
-    if score < 2.75:
-        level_text = d["low"]
-    elif score < 3.50:
-        level_text = d["mid"]
-    else:
-        level_text = d["high"]
-
-    profile_note = ""
-    if subscale == strongest:
-        profile_note = " Profil içindeki yeri: Bu alan katılımcının en güçlü görünen kaynağıdır; diğer gelişim alanlarını desteklemek için kullanılabilir."
-    elif subscale == weakest:
-        profile_note = " Profil içindeki yeri: Bu alan katılımcının en fazla desteklenebilecek alanıdır; küçük ve somut hedeflerle güçlendirilebilir."
-
-    questions = "\n".join([f"- {q}" for q in d["questions"]])
-    suggestions = "\n".join([f"- {s}" for s in d["suggestions"]])
-
     return (
-        f"{d['meaning']}\n\n"
-        f"Puan yorumu: {score:.2f}/5; betimleyici düzey: {level_band(score)}. {level_text}{profile_note}\n\n"
-        f"Günlük yaşamdaki karşılığı: {d['daily']}\n\n"
-        f"Katılımcının kendisine sorabileceği sorular:\n{questions}\n\n"
-        f"Bu alanı güçlendirmek için öneriler:\n{suggestions}"
+        f"Bu alt boyut için puan {score:.2f}/5 olup betimleyici düzey {level_band(score)} olarak değerlendirilmiştir. "
+        f"Bu alan, katılımcının psikolojik dayanıklılık profilindeki önemli kaynaklardan biridir. "
+        f"Eğer bu alan güçlü görünüyorsa korunması, daha düşük görünüyorsa küçük ve uygulanabilir adımlarla desteklenmesi önerilir."
     )
 
 
@@ -467,9 +342,7 @@ st.caption("Katılımcı ölçeği bireysel olarak doldurur; uygulama sonunda ki
 
 with st.expander("Uygulama hakkında kısa bilgi", expanded=True):
     st.write(
-        "Bu uygulama, 33 maddelik Yetişkinler İçin Psikolojik Dayanıklılık Ölçeği yanıtlarını altı alt boyutta özetler: "
-        "kendilik algısı, gelecek algısı, yapısal stil, sosyal yeterlilik, aile uyumu ve sosyal kaynaklar. "
-        "Yüksek puanlar ilgili alanda daha güçlü psikolojik dayanıklılık kaynaklarına işaret eder."
+        "Bu uygulama, 33 maddelik Yetişkinler İçin Psikolojik Dayanıklılık Ölçeği yanıtlarını altı alt boyutta özetler."
     )
     st.warning(
         "Bu uygulama tanı koymaz ve klinik değerlendirme yerine geçmez. Rapor yalnızca bilgilendirme ve öz değerlendirme amacıyla hazırlanır."
@@ -611,8 +484,7 @@ if submitted:
     st.markdown("## 🔎 Alt Boyutlara Göre Ayrıntılı Yorumlar")
 
     st.write(
-        "Her alt boyut; anlamı, puan yorumu, günlük yaşamdaki karşılığı, "
-        "katılımcının kendisine sorabileceği sorular ve güçlendirme önerileriyle birlikte verilmiştir."
+        "Her alt boyut; anlamı, puan yorumu ve güçlendirme önerileriyle birlikte verilmiştir."
     )
 
     for sub, score in subscale_scores.items():
